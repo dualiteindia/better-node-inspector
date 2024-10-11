@@ -1,6 +1,6 @@
 {
-  "name": "Dualite - Figma Plugin Template",
-  "id": "react-sample",
+  "name": "better-node-inspector",
+  "id": "better-node-inspector",
   "api": "1.0.0",
   "editorType": ["figma", "figjam"],
   "permissions": [],
