@@ -1,0 +1,14 @@
+{
+  "name": "Dualite - Figma Plugin Template",
+  "id": "react-sample",
+  "api": "1.0.0",
+  "editorType": ["figma", "figjam"],
+  "permissions": [],
+  "main": "dist/code.js",
+  "ui": "dist/index.html",
+  "networkAccess": {
+    "allowedDomains": ["*"],
+    "reasoning": "This plugin needs to access the download img from internet."
+  },
+  "documentAccess": "dynamic-page"
+}

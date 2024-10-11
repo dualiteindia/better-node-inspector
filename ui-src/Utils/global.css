@@ -1,0 +1,96 @@
+@keyframes rotate {
+  0% {
+    transform: translateY(50px);
+  }
+
+  50% {
+    transform: translateY(180px);
+  }
+
+  /* 70% {
+    transform: translateX(160px);
+  } */
+
+  100% {
+    transform: translateY(50px);
+  }
+}
+
+@keyframes rotate-2 {
+  0% {
+    transform: translateY(120px);
+  }
+
+  30% {
+    transform: translateX(-140px, 50px);
+  }
+
+  60% {
+    transform: translateX(160px);
+  }
+
+  100% {
+    transform: translateY(120px);
+  }
+}
+
+@keyframes rotate-3 {
+  0% {
+    transform: translateX(-160px, 50px);
+  }
+
+  30% {
+    transform: translate(160px, -50px);
+  }
+
+  100% {
+    transform: translateX(-160px, 50px);
+  }
+}
+
+.animate-rotate-1 {
+  animation: rotate 3s ease-in infinite;
+}
+
+.animate-rotate-2 {
+  animation: rotate-2 3s ease-in infinite;
+}
+
+.animate-rotate-3 {
+  animation: rotate-3 3s ease-in infinite;
+}
+
+.zoom-in-out-box {
+  animation: zoom-in-zoom-out 1s ease 1; /* Set animation iteration to 1 */
+}
+
+@keyframes zoom-in-zoom-out {
+  0% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1.2, 1.2);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+/* Add a class to remove animation after it completes */
+.animation-done {
+  animation: none;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: gray;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: black;
+}
