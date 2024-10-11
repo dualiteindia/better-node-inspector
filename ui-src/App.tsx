@@ -40,22 +40,22 @@ import "./App.css";
 import { useEffect, useState } from "react";
 
 function App() {
-  const [data, setData] = useState({});
+  const [nodeData, setNodeData] = useState({});
   useEffect(() => {
     window.onmessage = (event) => {
       const { type, data } = event.data.pluginMessage;
 
-      console.log(data);
+      // console.log(data);
 
-      if (type === "selection-changed") {
-        setData(data);
+      if (type === "no-selection" || type === "frame") {
+        setNodeData(data);
       }
     };
   }, []);
   return (
     <div>
       <h1>Hello world</h1>
-      <p>{JSON.stringify(data)}</p>
+      <p>{JSON.stringify(nodeData)}</p>
     </div>
   );
 }
