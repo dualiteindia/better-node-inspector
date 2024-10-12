@@ -45,6 +45,12 @@ function getChildren() {
 }
 
 function App() {
+  const [selectedOption, setSelectedOption] = useState(""); // State to store selected value
+
+  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedOption(event.target.value); // Update state with selected value
+    getChildren();
+  };
 
   const [nodeData, setNodeData] = useState({});
   const [children, setChildren] = useState([]);
@@ -53,23 +59,37 @@ function App() {
     window.onmessage = (event) => {
       const { type, data } = event.data.pluginMessage;
 
-      // console.log("Data received: ", data);
+      console.log("Data received: ", data);
 
-      if (type === "no-selection" || type === "frame") {
-        setNodeData(data);
-      }
+      // if (type === "no-selection" || type === "frame") {
+      //   setNodeData(data);
+      // }
 
       if (type === "children") {
         console.log("Children received: ", data);
         setChildren(data);
       }
     };
-  }, []);
+  }, [selectedOption]);
   return (
     <div>
-      <h1>Hello world</h1>
-      <p>{JSON.stringify(nodeData)}</p>
-      <button onClick={getChildren}>Click</button>
+      <div>
+        <label htmlFor="dropdown">Choose an option:</label>
+        <select
+          id="dropdown"
+          value={selectedOption}
+          onChange={handleSelectChange}
+        >
+          <option value="">--Please choose an option--</option>
+          <option value="children">children</option>
+          {/* <option value="option2">Option 2</option>
+          <option value="option3">Option 3</option> */}
+        </select>
+
+        <p>You selected: {selectedOption}</p>
+      </div>
+
+      {/* <p>{JSON.stringify(nodeData)}</p> */}
       <p>{JSON.stringify(children)}</p>
     </div>
   );

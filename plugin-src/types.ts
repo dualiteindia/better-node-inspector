@@ -1,6 +1,6 @@
 export interface ParentNodeInterface {
   id: string;
-  children: ReadonlyArray<SceneNode>;
+  children?: ReadonlyArray<SceneNode>;
   parent: (BaseNode & ChildrenMixin) | null;
   name: string;
   visible: boolean;
@@ -31,8 +31,8 @@ export interface ParentNodeInterface {
   maskType?: MaskType;
   effects?: ReadonlyArray<Effect>;
   effectStyleId?: string;
-  fills: ReadonlyArray<Paint> | symbol;
-  fillStyleId: string | symbol;
+  fills?: ReadonlyArray<Paint> | symbol;
+  fillStyleId?: string | symbol;
   strokes?: ReadonlyArray<Paint>;
   strokeStyleId?: string;
   strokeWeight?: number | symbol;
@@ -76,7 +76,7 @@ export interface ParentNodeInterface {
 
   isAsset: boolean;
   detachedInfo?: DetachedInfo | null;
-  devStatus: DevStatus;
+  devStatus?: DevStatus;
 
   paddingLeft?: number;
   paddingRight?: number;
@@ -97,7 +97,6 @@ export interface ParentNodeInterface {
   constraints?: Constraints;
   layoutMode?: "NONE" | "HORIZONTAL" | "VERTICAL";
   counterAxisSizingMode?: "FIXED" | "AUTO";
-  verticalPadding?: number;
   itemSpacing?: number;
   overflowDirection?: OverflowDirection;
   numberOfFixedChildren?: number;

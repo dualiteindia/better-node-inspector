@@ -1,23 +1,27 @@
 import { ParentNodeInterface } from "./types";
 
-function getChildren(node: FrameNode | SectionNode) {
-  let children: readonly SceneNode[] = [];
+function getChildren(node: ParentNodeInterface): any {
+  let children: ParentNodeInterface[] = [];
 
   if (node.type === "FRAME") {
-    children = (node as FrameNode).children;
-  } else if (node.type === "SECTION") {
-    children = (node as SectionNode).children;
+    if (node.children) {
+      node.children.forEach((child) => {
+        console.log("Child", child);
+        if (child.type === "FRAME") {
+          children.push(getFrameData(child as ParentNodeInterface));
+        }
+      });
+    }
   }
 
   return children;
 }
 
 // create the return type for getFrameData and getSectionData functions
-function getFrameData(node: ParentNodeInterface): any {
+function getFrameData(node: ParentNodeInterface): ParentNodeInterface {
   console.log("Node", node);
 
-  return [
-    {
+  return {
       id: node.id,
       type: node.type,
       children: [],
@@ -80,7 +84,6 @@ function getFrameData(node: ParentNodeInterface): any {
       constraints: node.constraints,
       layoutMode: node.layoutMode,
       counterAxisSizingMode: node.counterAxisSizingMode,
-      verticalPadding: node.verticalPadding,
       itemSpacing: node.itemSpacing,
       overflowDirection: node.overflowDirection,
       numberOfFixedChildren: node.numberOfFixedChildren,
@@ -114,8 +117,8 @@ function getFrameData(node: ParentNodeInterface): any {
       clipsContent: node.clipsContent,
       devStatus: node.devStatus,
       reactions: node.reactions,
-    },
-  ];
+    }
+  
 }
 
 function getSectionData(node: ParentNodeInterface) {
@@ -184,9 +187,9 @@ figma.ui.onmessage = async (msg) => {
   if (msg.type === "get-children") {
     console.log("hit");
     const selection = figma.currentPage.selection[0];
-    console.log(selection);
-    const node = figma.getNodeById(selection.id) as FrameNode | SectionNode;
-    const children = getChildren(node);
+    console.log("selection", selection);
+    const children = getChildren(selection);
+    console.log("children", children);
 
     figma.ui.postMessage({
       type: "children",
