@@ -47,7 +47,7 @@ function App() {
 
       // console.log(data);
 
-      if (type === "no-selection" || type === "frame") {
+      if (type === "no-selection" || type === "frame" || type === "section") {
         setNodeData(data);
       }
     };
