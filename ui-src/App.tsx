@@ -39,16 +39,29 @@ import "./App.css";
 
 import { useEffect, useState } from "react";
 
+function getChildren() {
+  console.log("Getting children");
+  parent.postMessage({ pluginMessage: { type: "get-children" } }, "*");
+}
+
 function App() {
+
   const [nodeData, setNodeData] = useState({});
+  const [children, setChildren] = useState([]);
+
   useEffect(() => {
     window.onmessage = (event) => {
       const { type, data } = event.data.pluginMessage;
 
-      // console.log(data);
+      // console.log("Data received: ", data);
 
-      if (type === "no-selection" || type === "frame" || type === "section") {
+      if (type === "no-selection" || type === "frame") {
         setNodeData(data);
+      }
+
+      if (type === "children") {
+        console.log("Children received: ", data);
+        setChildren(data);
       }
     };
   }, []);
@@ -56,6 +69,8 @@ function App() {
     <div>
       <h1>Hello world</h1>
       <p>{JSON.stringify(nodeData)}</p>
+      <button onClick={getChildren}>Click</button>
+      <p>{JSON.stringify(children)}</p>
     </div>
   );
 }
