@@ -5,6 +5,8 @@ module.exports = {
     extend: {
       colors: {
         strokeBlue: "#002DFF",
+        buttonBlue1: "#2246EE",
+        buttonBlue2: "#2B7FFF",
       },
     },
   },
