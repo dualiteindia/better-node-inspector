@@ -113,6 +113,7 @@ export interface ParentNodeInterface {
   bottomRightRadius?: number;
   clipsContent?: boolean;
   inferredAutoLayout?: InferredAutoLayoutResult | null;
+  [key: string]: any; // Index signature added
 }
 
 // frame node

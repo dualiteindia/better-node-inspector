@@ -120,38 +120,67 @@ function getFrameData(node: ParentNodeInterface): ParentNodeInterface {
   };
 }
 
+const information: string[] = ["x", "y", "type", "name"];
+
 function getSectionData(node: ParentNodeInterface) {
-  return [
-    {
-      id: node.id,
-      type: node.type,
-      children: [],
-      parent: {},
-      name: node.name,
-      isAsset: node.isAsset,
-      visible: node.visible,
-      locked: node.locked,
-      stuckNodes: node.stuckNodes,
-      attachedConnectors: node.attachedConnectors,
-      exportSettings: node.exportSettings,
-      relativeTransform: node.relativeTransform,
-      absoluteTransform: node.absoluteTransform,
-      x: node.x,
-      y: node.y,
-      width: node.width,
-      height: node.height,
-      absoluteBoundingBox: node.absoluteBoundingBox,
-      fills: node.fills,
-      fillStyleId: node.fillStyleId,
-      componentPropertyReferences: node.componentPropertyReferences,
-      // boundVariables: node.boundVariables,
-      resolvedVariableModes: node.resolvedVariableModes,
-      // inferredVariables: node.inferredVariables,
-      explicitVariableModes: node.explicitVariableModes,
-      sectionContentsHidden: node.sectionContentsHidden,
-      devStatus: node.devStatus,
-    },
-  ];
+  const tempNode: (
+    | { remaining: Common[] }
+    | { fillProperties: Common[] }
+    | { commonProperties: Common[] }
+  )[] = [];
+  interface Common {
+    [key: string]: ParentNodeInterface;
+  }
+
+  const fillProperties: Common[] = [];
+  const commonProperties: Common[] = [];
+  const remaining: Common[] = [];
+  for (const key in node) {
+    if (key.includes("fill")) {
+      fillProperties.push({ [key]: node[key] });
+    } else if (information.indexOf(key) != -1) {
+      commonProperties.push({ [key]: node[key] });
+    } else {
+      remaining.push({ [key]: node[key] });
+    }
+  }
+
+  tempNode.push({ fillProperties });
+  tempNode.push({ commonProperties });
+  tempNode.push({ remaining });
+  console.log(tempNode);
+  return tempNode;
+  // return [
+  // {
+  //   id: node.id,
+  //   type: node.type,
+  //   children: [],
+  //   parent: {},
+  //   name: node.name,
+  //   isAsset: node.isAsset,
+  //   visible: node.visible,
+  //   locked: node.locked,
+  //   stuckNodes: node.stuckNodes,
+  //   attachedConnectors: node.attachedConnectors,
+  //   exportSettings: node.exportSettings,
+  //   relativeTransform: node.relativeTransform,
+  //   absoluteTransform: node.absoluteTransform,
+  //   x: node.x,
+  //   y: node.y,
+  //   width: node.width,
+  //   height: node.height,
+  //   absoluteBoundingBox: node.absoluteBoundingBox,
+  //   fills: node.fills,
+  //   fillStyleId: node.fillStyleId,
+  //   componentPropertyReferences: node.componentPropertyReferences,
+  //   // boundVariables: node.boundVariables,
+  //   resolvedVariableModes: node.resolvedVariableModes,
+  //   // inferredVariables: node.inferredVariables,
+  //   explicitVariableModes: node.explicitVariableModes,
+  //   sectionContentsHidden: node.sectionContentsHidden,
+  //   devStatus: node.devStatus,
+  // },
+  // ];
 }
 
 figma.on("run", () => {
@@ -162,9 +191,12 @@ figma.on("run", () => {
 
 figma.on("selectionchange", async () => {
   const selectedNodes = figma.currentPage.selection;
-  console.log(selectedNodes[0].type);
+  console.log("ddsf", selectedNodes.length); // 0
+  console.log(selectedNodes[0].type, selectedNodes[0].name);
 
-  if (selectedNodes.length === 0) {
+  // not able to reach here
+  if (selectedNodes.length == 0) {
+    console.log("dddsf", selectedNodes);
     figma.ui.postMessage({ type: "no-selection", data: {} });
     return;
   }
