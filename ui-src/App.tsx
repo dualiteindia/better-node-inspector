@@ -1,6 +1,5 @@
 import "./App.css";
 import { RouterProvider, createMemoryRouter } from "react-router-dom";
-import Rectangle from "./screen/Rectangle";
 import Home from "./screen/Home";
 import Splash from "./screen/Splash";
 import StoreProvider from "./StoreProvider";
@@ -30,64 +29,3 @@ function App() {
 }
 
 export default App;
-
-// my code
-
-// import { useEffect, useState } from "react";
-
-// function getChildren() {
-//   console.log("Getting children");
-//   parent.postMessage({ pluginMessage: { type: "get-children" } }, "*");
-// }
-
-// function App() {
-//   const [selectedOption, setSelectedOption] = useState(""); // State to store selected value
-
-//   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-//     setSelectedOption(event.target.value); // Update state with selected value
-//     getChildren();
-//   };
-
-//   const [nodeData, setNodeData] = useState({});
-//   const [children, setChildren] = useState([]);
-
-//   useEffect(() => {
-//     window.onmessage = (event) => {
-//       const { type, data } = event.data.pluginMessage;
-
-//       console.log("Data received: ", data);
-
-//       // if (type === "no-selection" || type === "frame") {
-//       //   setNodeData(data);
-//       // }
-
-//       if (type === "children") {
-//         console.log("Children received: ", data);
-//         setChildren(data);
-//       }
-//     };
-//   }, [selectedOption]);
-//   return (
-//     <div>
-//       <div>
-//         <label htmlFor="dropdown">Choose an option:</label>
-//         <select
-//           id="dropdown"
-//           value={selectedOption}
-//           onChange={handleSelectChange}
-//         >
-//           <option value="">--Please choose an option--</option>
-//           <option value="children">children</option>
-
-//         </select>
-
-//         <p>You selected: {selectedOption}</p>
-//       </div>
-
-//       {/* <p>{JSON.stringify(nodeData)}</p> */}
-//       <p>{JSON.stringify(children)}</p>
-//     </div>
-//   );
-// }
-
-// export default App;
