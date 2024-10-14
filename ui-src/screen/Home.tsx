@@ -45,35 +45,39 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="h-screen w-screen  ">
-      <Navbar selectionName={nodeName} />
-      {Object.keys(nodeData).length === 0 ? (
-        <EmptyNode />
-      ) : (
-        <div>
-          <ExpandableProperty propertyName={"General Properties"}>
-            {JSON.stringify(nodeData[0])}
-          </ExpandableProperty>
+    <div className="h-full w-screen flex flex-col">
+      <div className="p-3">
+        <Navbar selectionName={nodeName} />
+      </div>
+      <div className="h-full">
+        {Object.keys(nodeData).length === 0 ? (
+          <div className="flex justify-center items-center h-full">
+            <EmptyNode />
+          </div>
+        ) : (
+          <div className="mt-6">
+            <ExpandableProperty propertyName={"General Properties"}>
+              {JSON.stringify(nodeData[1])}
+            </ExpandableProperty>
 
-          <ExpandableProperty propertyName={"Positional Properties"}>
-            {JSON.stringify(nodeData[0])}
-          </ExpandableProperty>
+            <ExpandableProperty propertyName={"Positional Properties"}>
+              {JSON.stringify(nodeData[0])}
+            </ExpandableProperty>
 
-          <ExpandableProperty propertyName={"Flex/AutoLayout Properties"}>
-            {JSON.stringify(nodeData[0])}
-          </ExpandableProperty>
+            <ExpandableProperty propertyName={"Flex/AutoLayout Properties"}>
+              {JSON.stringify(nodeData[0])}
+            </ExpandableProperty>
 
-          <ExpandableProperty propertyName={"Fill Properties"}>
-            {JSON.stringify(nodeData[0])}
-          </ExpandableProperty>
+            <ExpandableProperty propertyName={"Fill Properties"}>
+              {JSON.stringify(nodeData[0])}
+            </ExpandableProperty>
 
-          <ExpandableProperty propertyName={"Children"}>
-            {JSON.stringify(nodeData[0])}
-          </ExpandableProperty>
-        </div>
-      )}
-      {/* <p>{JSON.stringify(nodeData)}</p> */}
-      {/* <p>{JSON.stringify(children)}</p> */}
+            <ExpandableProperty propertyName={"Children"}>
+              {JSON.stringify(nodeData[0])}
+            </ExpandableProperty>
+          </div>
+        )}
+      </div>
       <Footer />
     </div>
   );

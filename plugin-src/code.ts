@@ -122,7 +122,7 @@ function getFrameData(node: ParentNodeInterface): ParentNodeInterface {
 
 const information: string[] = ["x", "y", "type", "name"];
 
-function getSectionData(node: ParentNodeInterface) {
+function getData(node: ParentNodeInterface) {
   const tempNode: (
     | { remaining: Common[] }
     | { fillProperties: Common[] }
@@ -150,6 +150,7 @@ function getSectionData(node: ParentNodeInterface) {
   tempNode.push({ remaining });
   console.log(tempNode);
   return tempNode;
+
   // return [
   // {
   //   id: node.id,
@@ -192,7 +193,7 @@ figma.on("run", () => {
 figma.on("selectionchange", async () => {
   const selectedNodes = figma.currentPage.selection;
   console.log("ddsf", selectedNodes.length); // 0
-  console.log(selectedNodes[0].type, selectedNodes[0].name);
+  // console.log(selectedNodes[0].type, selectedNodes[0].name);
 
   // not able to reach here
   if (selectedNodes.length == 0) {
@@ -204,12 +205,12 @@ figma.on("selectionchange", async () => {
   if (selectedNodes[0].type === "FRAME") {
     figma.ui.postMessage({
       type: "frame",
-      data: getFrameData(selectedNodes[0] as FrameNode),
+      data: getData(selectedNodes[0]),
     });
   } else if (selectedNodes[0].type === "SECTION") {
     figma.ui.postMessage({
       type: "section",
-      data: getSectionData(selectedNodes[0] as SectionNode),
+      data: getData(selectedNodes[0]),
     });
   }
 });
