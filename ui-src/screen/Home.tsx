@@ -1,17 +1,17 @@
 import { Link } from "react-router-dom";
+import Footer from "../Components/Footer";
+import Navbar from "../Components/Navbar";
 
 const Home = () => {
   return (
     <div className="h-screen w-screen flex justify-center items-center">
-      <div>
-        <h5 className="flex h-full w-full justify-center items-center">Dualite + Figma Boilerplate App</h5>
-        <p>A simple app to combining Plugin Boilerplate.</p>
-        <p>
-          <Link to="/rectangle">Navigate to app</Link>
-        </p>
-      </div>
+      <Navbar/>
+      <Footer/>
+
     </div>
   );
 };
 
-export default Home;
+export default Home
+
+{/* <Link to="/rectangle">Navigate to app</Link> */}
