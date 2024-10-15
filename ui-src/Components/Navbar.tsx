@@ -5,13 +5,28 @@ interface NavbarProps {
 }
 
 export default function Navbar({ selectionName }: NavbarProps) {
+  const truncatedSelectionName =
+    selectionName?.length > 30
+      ? selectionName.slice(0, 20) + "..."
+      : selectionName;
   return (
     <div className="flex justify-between">
       <div className="font-semibold">
-        {selectionName ? `${selectionName} Selected` : "Nothing Selected"}
+        {selectionName
+          ? `${truncatedSelectionName} Selected`
+          : "Nothing Selected"}
       </div>
-
-      <img src={Github} alt="GithubLogo" className="h-[30px]" />
+      <div
+        onClick={() =>
+          window.open("https://github.com/dualiteindia/better-node-inspector")
+        }
+      >
+        <img
+          src={Github}
+          alt="GithubLogo"
+          className=" cursor-pointer h-[30px]"
+        />
+      </div>
     </div>
   );
 }

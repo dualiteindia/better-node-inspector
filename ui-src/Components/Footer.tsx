@@ -10,7 +10,12 @@ export default function Footer() {
         <div className="text-[0.65rem] font-semibold">
           Convert your designs to code with Dualite
         </div>
-        <Button icon={shineIcon}>Visit</Button>
+        <Button
+          onClick={() => window.open("https://dualite.dev")}
+          icon={shineIcon}
+        >
+          Visit
+        </Button>
       </div>
     </div>
   );

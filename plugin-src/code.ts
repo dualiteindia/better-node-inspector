@@ -143,91 +143,96 @@ const postion: string[] = [
 ];
 
 function getData(node: ParentNodeInterface) {
-  const tempNode: getDataReturnInternface = {
-    fillProperties: [],
-    commonProperties: [],
-    layoutProperties: [],
-    postionalProperties: [],
-    remaining: [],
-  };
+  try {
+    const tempNode: getDataReturnInternface = {
+      fillProperties: [],
+      commonProperties: [],
+      layoutProperties: [],
+      postionalProperties: [],
+      remaining: [],
+    };
 
-  const fillProperties: Common[] = [];
-  const commonProperties: Common[] = [];
-  const layoutProperties: Common[] = [];
-  const postionalProperties: Common[] = [];
-  const remaining: Common[] = [];
-  for (const key in node) {
-    if (key.includes("fill")) {
-      if (fillProperties.length === 0) {
-        fillProperties.push({});
+    const fillProperties: Common[] = [];
+    const commonProperties: Common[] = [];
+    const layoutProperties: Common[] = [];
+    const postionalProperties: Common[] = [];
+    const remaining: Common[] = [];
+    for (const key in node) {
+      if (key.includes("fill")) {
+        if (fillProperties.length === 0) {
+          fillProperties.push({});
+        }
+        fillProperties[0][key] = node[key];
+      } else if (common.indexOf(key) != -1) {
+        if (commonProperties.length === 0) {
+          commonProperties.push({});
+        }
+        commonProperties[0][key] = node[key];
+      } else if (layout.some((substring) => key.includes(substring))) {
+        if (layoutProperties.length === 0) {
+          layoutProperties.push({});
+        }
+        layoutProperties[0][key] = node[key];
+      } else if (
+        postion.some((substring) => key.includes(substring)) ||
+        key === "x" ||
+        key === "y"
+      ) {
+        if (postionalProperties.length === 0) {
+          postionalProperties.push({});
+        }
+        postionalProperties[0][key] = node[key];
+      } else {
+        if (remaining.length === 0) {
+          remaining.push({});
+        }
+        remaining[0][key] = node[key];
       }
-      fillProperties[0][key] = node[key];
-    } else if (common.indexOf(key) != -1) {
-      if (commonProperties.length === 0) {
-        commonProperties.push({});
-      }
-      commonProperties[0][key] = node[key];
-    } else if (layout.some((substring) => key.includes(substring))) {
-      if (layoutProperties.length === 0) {
-        layoutProperties.push({});
-      }
-      layoutProperties[0][key] = node[key];
-    } else if (
-      postion.some((substring) => key.includes(substring)) ||
-      key === "x" ||
-      key === "y"
-    ) {
-      if (postionalProperties.length === 0) {
-        postionalProperties.push({});
-      }
-      postionalProperties[0][key] = node[key];
-    } else {
-      if (remaining.length === 0) {
-        remaining.push({});
-      }
-      remaining[0][key] = node[key];
     }
+
+    tempNode.fillProperties = fillProperties;
+    tempNode.commonProperties = commonProperties;
+    tempNode.layoutProperties = layoutProperties;
+    tempNode.postionalProperties = postionalProperties;
+    tempNode.remaining = remaining;
+    // console.log("TempNode", tempNode);
+    return tempNode;
+
+    // return [
+    // {
+    //   id: node.id,
+    //   type: node.type,
+    //   children: [],
+    //   parent: {},
+    //   name: node.name,
+    //   isAsset: node.isAsset,
+    //   visible: node.visible,
+    //   locked: node.locked,
+    //   stuckNodes: node.stuckNodes,
+    //   attachedConnectors: node.attachedConnectors,
+    //   exportSettings: node.exportSettings,
+    //   relativeTransform: node.relativeTransform,
+    //   absoluteTransform: node.absoluteTransform,
+    //   x: node.x,
+    //   y: node.y,
+    //   width: node.width,
+    //   height: node.height,
+    //   absoluteBoundingBox: node.absoluteBoundingBox,
+    //   fills: node.fills,
+    //   fillStyleId: node.fillStyleId,
+    //   componentPropertyReferences: node.componentPropertyReferences,
+    //   // boundVariables: node.boundVariables,
+    //   resolvedVariableModes: node.resolvedVariableModes,
+    //   // inferredVariables: node.inferredVariables,
+    //   explicitVariableModes: node.explicitVariableModes,
+    //   sectionContentsHidden: node.sectionContentsHidden,
+    //   devStatus: node.devStatus,
+    // },
+    // ];
+  } catch (e) {
+    console.error("Error in getData", e);
+    return {} as getDataReturnInternface;
   }
-
-  tempNode.fillProperties = fillProperties;
-  tempNode.commonProperties = commonProperties;
-  tempNode.layoutProperties = layoutProperties;
-  tempNode.postionalProperties = postionalProperties;
-  tempNode.remaining = remaining;
-  // console.log("TempNode", tempNode);
-  return tempNode;
-
-  // return [
-  // {
-  //   id: node.id,
-  //   type: node.type,
-  //   children: [],
-  //   parent: {},
-  //   name: node.name,
-  //   isAsset: node.isAsset,
-  //   visible: node.visible,
-  //   locked: node.locked,
-  //   stuckNodes: node.stuckNodes,
-  //   attachedConnectors: node.attachedConnectors,
-  //   exportSettings: node.exportSettings,
-  //   relativeTransform: node.relativeTransform,
-  //   absoluteTransform: node.absoluteTransform,
-  //   x: node.x,
-  //   y: node.y,
-  //   width: node.width,
-  //   height: node.height,
-  //   absoluteBoundingBox: node.absoluteBoundingBox,
-  //   fills: node.fills,
-  //   fillStyleId: node.fillStyleId,
-  //   componentPropertyReferences: node.componentPropertyReferences,
-  //   // boundVariables: node.boundVariables,
-  //   resolvedVariableModes: node.resolvedVariableModes,
-  //   // inferredVariables: node.inferredVariables,
-  //   explicitVariableModes: node.explicitVariableModes,
-  //   sectionContentsHidden: node.sectionContentsHidden,
-  //   devStatus: node.devStatus,
-  // },
-  // ];
 }
 
 figma.on("run", () => {

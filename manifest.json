@@ -2,13 +2,17 @@
   "name": "Node Inspector - By Dualite",
   "id": "better-node-inspector",
   "api": "1.0.0",
-  "editorType": ["figma", "figjam"],
+  "editorType": [
+    "figma",
+    "figjam"
+  ],
   "permissions": [],
   "main": "dist/code.js",
   "ui": "dist/index.html",
   "networkAccess": {
-    "allowedDomains": ["*"],
-    "reasoning": "This plugin needs to access the download img from internet."
+    "allowedDomains": [
+      "none"
+    ]
   },
   "documentAccess": "dynamic-page"
 }

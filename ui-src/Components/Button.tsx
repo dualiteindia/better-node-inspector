@@ -4,12 +4,13 @@ interface ButtonProps {
   children: ReactNode;
   className?: string;
   icon?: string;
+  onClick?: () => void;
 }
 
-export const Button = ({ children, icon }: ButtonProps) => {
+export const Button = ({ onClick, children, icon }: ButtonProps) => {
   return (
     <div>
-      <button className="bg-gradient-to-b from-buttonBlue1 to-buttonBlue2 text-white font-bold rounded flex justify-between items-center gap-1 py-2 text-xs px-3">
+      <button onClick={onClick} className="bg-gradient-to-b from-buttonBlue1 to-buttonBlue2 text-white font-bold rounded flex justify-between items-center gap-1 py-2 text-xs px-3">
         <img src={icon} alt="shineIcon" className="h-[10px] w-[10px]" />
         {children}
       </button>

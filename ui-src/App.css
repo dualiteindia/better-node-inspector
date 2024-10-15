@@ -73,3 +73,22 @@ section > * + * {
 footer > * + * {
   margin-left: 0.5rem;
 }
+
+/* Custom scrollbar styles */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-border);
+  border-radius: 3px;
+  border: 1px solid var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-border-focus);
+}

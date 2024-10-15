@@ -14,7 +14,7 @@ export default function ExpandableProperty({
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="mb-2.5 mx-6">
+    <div className="mb-2.5 mx-3">
       <div
         onClick={() => setIsExpanded(!isExpanded)}
         style={{ cursor: "pointer" }}
