@@ -1,6 +1,6 @@
 import { Button } from "./Button";
 
-import shineIcon from "../shineIcon.png";
+import shineIcon from "../public/assests/shineIcon.png";
 
 export default function Footer() {
   return (

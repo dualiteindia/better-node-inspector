@@ -1,6 +1,7 @@
+import Github from "../public/assests/GitHub.png";
+
 interface NavbarProps {
   selectionName: string;
-  // github: string;
 }
 
 export default function Navbar({ selectionName }: NavbarProps) {
@@ -9,7 +10,8 @@ export default function Navbar({ selectionName }: NavbarProps) {
       <div className="font-semibold">
         {selectionName ? `${selectionName} Selected` : "Nothing Selected"}
       </div>
-      <div className="rounded-xl border">Git</div>
+
+      <img src={Github} alt="GithubLogo" className="h-[30px]" />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import block from "../block.png";
+import block from "../public/assests/block.png";
 
 export default function EmptyNode() {
   return (

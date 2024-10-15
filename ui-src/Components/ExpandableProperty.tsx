@@ -5,9 +5,11 @@ import { FaChevronDown } from "react-icons/fa6";
 export default function ExpandableProperty({
   propertyName,
   children,
+  loadChildren
 }: {
   propertyName: string;
   children: React.ReactNode;
+  loadChildren?: () => void;
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -18,7 +20,14 @@ export default function ExpandableProperty({
         style={{ cursor: "pointer" }}
       >
         <div className=" border rounded bg-white bg-opacity-10">
-          <div className="flex items-center justify-between p-2">
+          <div
+            className="flex items-center justify-between p-2"
+            {...(propertyName === "Children" && {
+              onClick: (e) => {
+                loadChildren && loadChildren()
+              },
+            })}
+          >
             <div>{propertyName}</div>
             {isExpanded ? <FaChevronDown /> : <FaGreaterThan />}
           </div>

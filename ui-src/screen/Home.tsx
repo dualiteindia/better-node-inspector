@@ -5,41 +5,50 @@ import Navbar from "../Components/Navbar";
 import ExpandableProperty from "../Components/ExpandableProperty";
 import EmptyNode from "../Components/EmptyNode";
 
-// function getChildren() {
-//   console.log("Getting children");
-//   parent.postMessage({ pluginMessage: { type: "get-children" } }, "*");
-// }
+function getChildren() {
+  // console.log("Getting children");
+  parent.postMessage({ pluginMessage: { type: "get-children" } }, "*");
+}
 
 const Home = () => {
-  // const [selectedOption, setSelectedOption] = useState(""); // State to store selected value
-
-  // const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-  //   setSelectedOption(event.target.value); // Update state with selected value
-  //   getChildren();
-  // };
-
   interface NodeData {
-    fillProperties: any; // Adjust the type as needed
-    commonProperties: any; // Adjust the type as needed
-    remaining: any; // Adjust the type as needed
+    fillProperties: [];
+    commonProperties: [];
+    remaining: [];
   }
 
-  const [nodeData, setNodeData] = useState<NodeData[]>([]);
-  const [children, setChildren] = useState([]);
+  const [nodeData, setNodeData] = useState<NodeData>({
+    fillProperties: [],
+    commonProperties: [],
+    remaining: [],
+  });
+  const [children, setChildren] = useState<NodeData[]>([
+    {
+      fillProperties: [],
+      commonProperties: [],
+      remaining: [],
+    },
+  ]);
   const [nodeName, setNodeName] = useState("");
+  const [message, setMesssage] = useState("me");
 
   useEffect(() => {
     window.onmessage = (event) => {
       const { type, data } = event.data.pluginMessage;
 
-      if (type === "no-selection" || type === "frame" || type === "section") {
+      console.log("Type: ", type); // works
+
+      if (type === "no-selection" || type === "node-selected") {
+        setMesssage(type); // not working
         setNodeData(data);
-        setNodeName(data[1].commonProperties[0].name);
+        setNodeName(data.commonProperties[0].name);
+        console.log("Message", message);
       }
 
       if (type === "children") {
         console.log("Children received: ", data);
         setChildren(data);
+        console.log("Children on ui: ", children);
       }
     };
   }, []);
@@ -50,30 +59,33 @@ const Home = () => {
         <Navbar selectionName={nodeName} />
       </div>
       <div className="h-full">
-        {Object.keys(nodeData).length === 0 ? (
+        {message === "no-selection" ? (
           <div className="flex justify-center items-center h-full">
             <EmptyNode />
           </div>
         ) : (
           <div className="mt-6">
             <ExpandableProperty propertyName={"General Properties"}>
-              {JSON.stringify(nodeData[1])}
+              {JSON.stringify(nodeData?.commonProperties)}
             </ExpandableProperty>
 
             <ExpandableProperty propertyName={"Positional Properties"}>
-              {JSON.stringify(nodeData[0])}
+              {JSON.stringify("")}
             </ExpandableProperty>
 
             <ExpandableProperty propertyName={"Flex/AutoLayout Properties"}>
-              {JSON.stringify(nodeData[0])}
+              {JSON.stringify("")}
             </ExpandableProperty>
 
             <ExpandableProperty propertyName={"Fill Properties"}>
-              {JSON.stringify(nodeData[0])}
+              {JSON.stringify(nodeData?.fillProperties)}
             </ExpandableProperty>
 
-            <ExpandableProperty propertyName={"Children"}>
-              {JSON.stringify(nodeData[0])}
+            <ExpandableProperty
+              propertyName={"Children"}
+              loadChildren={getChildren}
+            >
+              {JSON.stringify(children)}
             </ExpandableProperty>
           </div>
         )}
