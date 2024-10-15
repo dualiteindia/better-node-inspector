@@ -9,9 +9,12 @@ function getChildren(node: ParentNodeInterface) {
 
       children.push(getData(child));
     });
+  } else {
+    return "";
   }
 
-  return children;
+  // return children;
+  return JSON.stringify(children, null, 2);
 }
 
 // create the return type for getFrameData and getSectionData functions
@@ -124,33 +127,70 @@ interface Common {
 interface getDataReturnInternface {
   fillProperties: Common[];
   commonProperties: Common[];
+  layoutProperties: Common[];
+  postionalProperties: Common[];
   remaining: Common[];
 }
 
-const information: string[] = ["x", "y", "type", "name"];
+const common: string[] = ["id", "type", "name"];
+const layout: string[] = ["layout", "Axis", "layout", "padding"];
+const postion: string[] = [
+  "x",
+  "y",
+  "width",
+  "height",
+  "radius",
+  "constraints",
+  "transform",
+];
 
 function getData(node: ParentNodeInterface) {
   const tempNode: getDataReturnInternface = {
     fillProperties: [],
     commonProperties: [],
+    layoutProperties: [],
+    postionalProperties: [],
     remaining: [],
   };
 
   const fillProperties: Common[] = [];
   const commonProperties: Common[] = [];
+  const layoutProperties: Common[] = [];
+  const postionalProperties: Common[] = [];
   const remaining: Common[] = [];
   for (const key in node) {
     if (key.includes("fill")) {
-      fillProperties.push({ [key]: node[key] });
-    } else if (information.indexOf(key) != -1) {
-      commonProperties.push({ [key]: node[key] });
+      if (fillProperties.length === 0) {
+        fillProperties.push({});
+      }
+      fillProperties[0][key] = node[key];
+    } else if (common.indexOf(key) != -1) {
+      if (commonProperties.length === 0) {
+        commonProperties.push({});
+      }
+      commonProperties[0][key] = node[key];
+    } else if (layout.some((substring) => key.includes(substring))) {
+      if (layoutProperties.length === 0) {
+        layoutProperties.push({});
+      }
+      layoutProperties[0][key] = node[key];
+    } else if (postion.some((substring) => key.includes(substring))) {
+      if (postionalProperties.length === 0) {
+        postionalProperties.push({});
+      }
+      postionalProperties[0][key] = node[key];
     } else {
-      remaining.push({ [key]: node[key] });
+      if (remaining.length === 0) {
+        remaining.push({});
+      }
+      remaining[0][key] = node[key];
     }
   }
 
   tempNode.fillProperties = fillProperties;
   tempNode.commonProperties = commonProperties;
+  tempNode.layoutProperties = layoutProperties;
+  tempNode.postionalProperties = postionalProperties;
   tempNode.remaining = remaining;
   // console.log("TempNode", tempNode);
   return tempNode;
@@ -194,9 +234,9 @@ figma.on("run", () => {
   console.log("Node inspector is running");
 });
 
-figma.on("selectionchange", async () => {
+const handleSelectionChange = async () => {
   const selectedNodes = figma.currentPage.selection;
-  console.log("ddsf", selectedNodes.length); // 0
+  console.log("length", selectedNodes.length); // 0
   // console.log(selectedNodes[0].type, selectedNodes[0].name);
 
   if (selectedNodes.length == 0) {
@@ -207,23 +247,25 @@ figma.on("selectionchange", async () => {
   if (selectedNodes.length > 0) {
     figma.ui.postMessage({
       type: "node-selected",
-      data: getData(selectedNodes[0]),
+      value: getData(selectedNodes[0]),
+      children: [],
     });
   }
-});
+};
+
+figma.on("selectionchange", handleSelectionChange);
 
 figma.ui.onmessage = async (msg) => {
+  const selection = figma.currentPage.selection[0];
   if (msg.type === "get-children") {
     // console.log("hit");
-    const selection = figma.currentPage.selection[0];
+
     const children = getChildren(selection);
     console.log("children", children);
 
     figma.ui.postMessage({
       type: "children",
-      data: children,
+      value: children,
     });
-  } else {
-    figma.closePlugin("");
   }
 };

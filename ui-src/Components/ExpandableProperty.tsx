@@ -23,7 +23,7 @@ export default function ExpandableProperty({
           <div
             className="flex items-center justify-between p-2"
             {...(propertyName === "Children" && {
-              onClick: (e) => {
+              onClick: (evt) => {
                 loadChildren && loadChildren();
               },
             })}
@@ -33,7 +33,7 @@ export default function ExpandableProperty({
           </div>
           <div>
             {isExpanded && (
-              <pre className="bg-white bg-opacity-20 m-2.5 p-1 overflow-auto text-sm">
+              <pre className="bg-white bg-opacity-20 m-2.5 p-1 overflow-auto overflow-y-auto text-xs">
                 {children}
               </pre>
             )}
