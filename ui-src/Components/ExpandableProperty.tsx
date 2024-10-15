@@ -5,7 +5,7 @@ import { FaChevronDown } from "react-icons/fa6";
 export default function ExpandableProperty({
   propertyName,
   children,
-  loadChildren
+  loadChildren,
 }: {
   propertyName: string;
   children: React.ReactNode;
@@ -24,16 +24,20 @@ export default function ExpandableProperty({
             className="flex items-center justify-between p-2"
             {...(propertyName === "Children" && {
               onClick: (e) => {
-                loadChildren && loadChildren()
+                loadChildren && loadChildren();
               },
             })}
           >
             <div>{propertyName}</div>
             {isExpanded ? <FaChevronDown /> : <FaGreaterThan />}
           </div>
-          {isExpanded && (
-            <div className="bg-white bg-opacity-25 m-2">{children}</div>
-          )}
+          <div>
+            {isExpanded && (
+              <pre className="bg-white bg-opacity-20 m-2.5 p-1 overflow-auto text-sm">
+                {children}
+              </pre>
+            )}
+          </div>
         </div>
       </div>
     </div>

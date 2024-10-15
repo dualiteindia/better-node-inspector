@@ -30,19 +30,22 @@ const Home = () => {
     },
   ]);
   const [nodeName, setNodeName] = useState("");
-  const [message, setMesssage] = useState("me");
+  const [message, setMesssage] = useState("no-selection");
 
   useEffect(() => {
     window.onmessage = (event) => {
       const { type, data } = event.data.pluginMessage;
 
-      console.log("Type: ", type); // works
-
-      if (type === "no-selection" || type === "node-selected") {
-        setMesssage(type); // not working
+      if (type === "no-selection") {
+        setMesssage(type);
         setNodeData(data);
-        setNodeName(data.commonProperties[0].name);
-        console.log("Message", message);
+        setNodeName("");
+      }
+
+      if (type === "node-selected") {
+        setMesssage(type);
+        setNodeData(data);
+        setNodeName(data?.commonProperties[0].name);
       }
 
       if (type === "children") {
@@ -51,7 +54,7 @@ const Home = () => {
         console.log("Children on ui: ", children);
       }
     };
-  }, []);
+  }, [message]);
 
   return (
     <div className="h-full w-screen flex flex-col">
@@ -66,7 +69,7 @@ const Home = () => {
         ) : (
           <div className="mt-6">
             <ExpandableProperty propertyName={"General Properties"}>
-              {JSON.stringify(nodeData?.commonProperties)}
+              {JSON.stringify(nodeData?.commonProperties, null, 2)}
             </ExpandableProperty>
 
             <ExpandableProperty propertyName={"Positional Properties"}>
@@ -78,7 +81,7 @@ const Home = () => {
             </ExpandableProperty>
 
             <ExpandableProperty propertyName={"Fill Properties"}>
-              {JSON.stringify(nodeData?.fillProperties)}
+              {JSON.stringify(nodeData?.fillProperties, null, 2)}
             </ExpandableProperty>
 
             <ExpandableProperty
