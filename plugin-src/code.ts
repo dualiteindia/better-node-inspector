@@ -135,8 +135,6 @@ interface getDataReturnInternface {
 const common: string[] = ["id", "type", "name"];
 const layout: string[] = ["layout", "Axis", "layout", "padding"];
 const postion: string[] = [
-  "x",
-  "y",
   "width",
   "height",
   "radius",
@@ -174,7 +172,11 @@ function getData(node: ParentNodeInterface) {
         layoutProperties.push({});
       }
       layoutProperties[0][key] = node[key];
-    } else if (postion.some((substring) => key.includes(substring))) {
+    } else if (
+      postion.some((substring) => key.includes(substring)) ||
+      key === "x" ||
+      key === "y"
+    ) {
       if (postionalProperties.length === 0) {
         postionalProperties.push({});
       }
