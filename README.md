@@ -1,5 +1,7 @@
 # Better Node Inspector Plugin
 
+View detailed properties of any selected node
+
 ## Installation
 
 - Clone the repository
