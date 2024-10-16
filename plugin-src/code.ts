@@ -1,20 +1,17 @@
 import { ParentNodeInterface } from "./types";
 
 function getChildren(node: ParentNodeInterface) {
-  let children: getDataReturnInternface[] = [];
+  let children: ParentNodeInterface[] = [];
 
   if (node.children) {
     node.children.forEach((child) => {
-      console.log("Child", child);
+      // console.log("Child", child);
 
-      children.push(getData(child));
+      children.push(getChildObject(child));
     });
-  } else {
-    return "";
+    return children;
   }
-
-  // return children;
-  return JSON.stringify(children, null, 2);
+  return [];
 }
 
 // create the return type for getFrameData and getSectionData functions
@@ -137,10 +134,20 @@ const layout: string[] = ["layout", "Axis", "layout", "padding"];
 const postion: string[] = [
   "width",
   "height",
-  "radius",
+  "Radius",
   "constraints",
-  "transform",
+  "Transform",
 ];
+
+function getChildObject(node: ParentNodeInterface): ParentNodeInterface {
+  const child: Common = {};
+
+  for (const key in node) {
+    child[key] = node[key];
+  }
+
+  return child as ParentNodeInterface;
+}
 
 function getData(node: ParentNodeInterface) {
   try {
@@ -254,7 +261,7 @@ const handleSelectionChange = async () => {
   if (selectedNodes.length > 0) {
     figma.ui.postMessage({
       type: "node-selected",
-      value: getData(selectedNodes[0]),
+      value: JSON.stringify(getData(selectedNodes[0])),
       children: [],
     });
   }
@@ -265,14 +272,12 @@ figma.on("selectionchange", handleSelectionChange);
 figma.ui.onmessage = async (msg) => {
   const selection = figma.currentPage.selection[0];
   if (msg.type === "get-children") {
-    // console.log("hit");
-
     const children = getChildren(selection);
-    console.log("children", children);
+    // console.log("children", children);
 
     figma.ui.postMessage({
       type: "children",
-      value: children,
+      value: JSON.stringify(children, null, 2),
     });
   }
 };

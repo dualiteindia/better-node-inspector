@@ -28,7 +28,7 @@ const Home = () => {
   //     remaining: [],
   //   },
   // ]);
-  const [children, setChildren] = useState("");
+  const [children, setChildren] = useState<string>("");
   const [nodeName, setNodeName] = useState("");
   const [message, setMesssage] = useState("no-selection");
 
@@ -41,25 +41,26 @@ const Home = () => {
   useEffect(() => {
     window.onmessage = (event) => {
       const { type, value, children } = event.data.pluginMessage;
-
-      if (type === "no-selection") {
-        setMesssage(type);
-        setNodeData(value);
-        setNodeName("");
-        setChildren(children);
+      if (value === undefined) {
+        if (type === "no-selection") {
+          setMesssage(type);
+          setNodeName("");
+        }
+        return;
       }
+
+      const data = JSON.parse(value);
 
       if (type === "node-selected") {
         setMesssage(type);
-        setNodeData(value);
-        setNodeName(value?.commonProperties[0].name);
+        setNodeData(data);
+        setNodeName(data?.commonProperties[0].name);
         setChildren(children);
       }
 
       if (type === "children") {
         // console.log("Children received: ", value);
         setChildren(value);
-        // console.log("Children on ui: ", children);
       }
     };
   }, [message]);
@@ -113,6 +114,3 @@ const Home = () => {
 };
 
 export default Home;
-
-// fix the children bug
-// make the github logo button
