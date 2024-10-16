@@ -1,146 +1,14 @@
-import { ParentNodeInterface } from "./types";
-
-function getChildren(node: ParentNodeInterface) {
-  let children: ParentNodeInterface[] = [];
-
-  if (node.children) {
-    node.children.forEach((child) => {
-      // console.log("Child", child);
-
-      children.push(getChildObject(child));
-    });
-    return children;
-  }
-  return [];
-}
-
-// create the return type for getFrameData and getSectionData functions
-// function getFrameData(node: ParentNodeInterface): ParentNodeInterface {
-//   console.log("Node", node);
-
-//   return {
-//     id: node.id,
-//     type: node.type,
-//     children: [],
-//     parent: node.parent,
-//     name: node.name,
-//     isAsset: node.isAsset,
-//     detachedInfo: node.detachedInfo,
-//     componentPropertyReferences: node.componentPropertyReferences,
-//     // boundVariables: node.boundVariables,
-//     resolvedVariableModes: node.resolvedVariableModes,
-//     // inferredVariables: node.inferredVariables,
-//     explicitVariableModes: node.explicitVariableModes,
-//     opacity: node.opacity,
-//     blendMode: node.blendMode,
-//     isMask: node.isMask,
-//     maskType: node.maskType,
-//     effects: node.effects,
-//     effectStyleId: node.effectStyleId,
-//     exportSettings: node.exportSettings,
-//     fills: node.fills,
-//     fillStyleId: node.fillStyleId,
-//     strokes: node.strokes,
-//     strokeStyleId: node.strokeStyleId,
-//     strokeWeight: node.strokeWeight,
-//     strokeAlign: node.strokeAlign,
-//     strokeJoin: node.strokeJoin,
-//     dashPattern: node.dashPattern,
-//     strokeCap: node.strokeCap,
-//     strokeMiterLimit: node.strokeMiterLimit,
-//     fillGeometry: node.fillGeometry,
-//     strokeGeometry: node.strokeGeometry,
-//     paddingLeft: node.paddingLeft,
-//     paddingRight: node.paddingRight,
-//     paddingTop: node.paddingTop,
-//     paddingBottom: node.paddingBottom,
-//     primaryAxisAlignItems: node.primaryAxisAlignItems,
-//     counterAxisAlignItems: node.counterAxisAlignItems,
-//     primaryAxisSizingMode: node.primaryAxisSizingMode,
-//     layoutWrap: node.layoutWrap,
-//     counterAxisSpacing: node.counterAxisSpacing,
-//     counterAxisAlignContent: node.counterAxisAlignContent,
-//     strokeTopWeight: node.strokeTopWeight,
-//     strokeBottomWeight: node.strokeBottomWeight,
-//     strokeLeftWeight: node.strokeLeftWeight,
-//     strokeRightWeight: node.strokeRightWeight,
-//     inferredAutoLayout: node.inferredAutoLayout,
-//     relativeTransform: node.relativeTransform,
-//     absoluteTransform: node.absoluteTransform,
-//     x: node.x,
-//     y: node.y,
-//     width: node.width,
-//     height: node.height,
-//     absoluteBoundingBox: node.absoluteBoundingBox,
-//     layoutGrids: node.layoutGrids,
-//     gridStyleId: node.gridStyleId,
-//     backgrounds: node.backgrounds,
-//     backgroundStyleId: node.backgroundStyleId,
-//     guides: node.guides,
-//     expanded: node.expanded,
-//     constraints: node.constraints,
-//     layoutMode: node.layoutMode,
-//     counterAxisSizingMode: node.counterAxisSizingMode,
-//     itemSpacing: node.itemSpacing,
-//     overflowDirection: node.overflowDirection,
-//     numberOfFixedChildren: node.numberOfFixedChildren,
-//     overlayPositionType: node.overlayPositionType,
-//     overlayBackground: node.overlayBackground,
-//     overlayBackgroundInteraction: node.overlayBackgroundInteraction,
-//     itemReverseZIndex: node.itemReverseZIndex,
-//     strokesIncludedInLayout: node.strokesIncludedInLayout,
-//     visible: node.visible,
-//     locked: node.locked,
-//     stuckNodes: node.stuckNodes,
-//     attachedConnectors: node.attachedConnectors,
-//     absoluteRenderBounds: node.absoluteRenderBounds,
-//     rotation: node.rotation,
-//     layoutAlign: node.layoutAlign,
-//     constrainProportions: node.constrainProportions,
-//     layoutGrow: node.layoutGrow,
-//     layoutPositioning: node.layoutPositioning,
-//     minWidth: node.minWidth,
-//     minHeight: node.minHeight,
-//     maxWidth: node.maxWidth,
-//     maxHeight: node.maxHeight,
-//     layoutSizingHorizontal: node.layoutSizingHorizontal,
-//     layoutSizingVertical: node.layoutSizingVertical,
-//     cornerRadius: node.cornerRadius,
-//     cornerSmoothing: node.cornerSmoothing,
-//     topLeftRadius: node.topLeftRadius,
-//     topRightRadius: node.topRightRadius,
-//     bottomLeftRadius: node.bottomLeftRadius,
-//     bottomRightRadius: node.bottomRightRadius,
-//     clipsContent: node.clipsContent,
-//     devStatus: node.devStatus,
-//     reactions: node.reactions,
-//   };
-// }
-
-interface Common {
-  [key: string]: ParentNodeInterface;
-}
-
-interface getDataReturnInternface {
-  fillProperties: Common[];
-  commonProperties: Common[];
-  layoutProperties: Common[];
-  postionalProperties: Common[];
-  remaining: Common[];
-}
-
-const common: string[] = ["id", "type", "name"];
-const layout: string[] = ["layout", "Axis", "layout", "padding"];
-const postion: string[] = [
-  "width",
-  "height",
-  "Radius",
-  "constraints",
-  "Transform",
-];
+import {
+  ParentNodeInterface,
+  CommonInterface,
+  GetDataReturnInternface,
+  common,
+  layout,
+  postion,
+} from "./types";
 
 function getChildObject(node: ParentNodeInterface): ParentNodeInterface {
-  const child: Common = {};
+  const child: CommonInterface = {};
 
   for (const key in node) {
     child[key] = node[key];
@@ -149,9 +17,28 @@ function getChildObject(node: ParentNodeInterface): ParentNodeInterface {
   return child as ParentNodeInterface;
 }
 
+function getChildren(node: ParentNodeInterface) {
+  let children: ParentNodeInterface[] = [];
+
+  try {
+    if (node.children) {
+      node.children.forEach((child) => {
+        // console.log("Child", child);
+
+        children.push(getChildObject(child));
+      });
+      return children;
+    }
+    return [];
+  } catch (err) {
+    console.error("Error in getChildren", err);
+    return [];
+  }
+}
+
 function getData(node: ParentNodeInterface) {
   try {
-    const tempNode: getDataReturnInternface = {
+    const tempNode: GetDataReturnInternface = {
       fillProperties: [],
       commonProperties: [],
       layoutProperties: [],
@@ -159,12 +46,16 @@ function getData(node: ParentNodeInterface) {
       remaining: [],
     };
 
-    const fillProperties: Common[] = [];
-    const commonProperties: Common[] = [];
-    const layoutProperties: Common[] = [];
-    const postionalProperties: Common[] = [];
-    const remaining: Common[] = [];
+    const fillProperties: CommonInterface[] = [];
+    const commonProperties: CommonInterface[] = [];
+    const layoutProperties: CommonInterface[] = [];
+    const postionalProperties: CommonInterface[] = [];
+    const remaining: CommonInterface[] = [];
     for (const key in node) {
+      // figma.mixed check
+      if (typeof key === "symbol") {
+        node[key] = "MIXED";
+      }
       if (key.includes("fill")) {
         if (fillProperties.length === 0) {
           fillProperties.push({});
@@ -238,7 +129,7 @@ function getData(node: ParentNodeInterface) {
     // ];
   } catch (e) {
     console.error("Error in getData", e);
-    return {} as getDataReturnInternface;
+    return {} as GetDataReturnInternface;
   }
 }
 
@@ -250,7 +141,7 @@ figma.on("run", () => {
 
 const handleSelectionChange = async () => {
   const selectedNodes = figma.currentPage.selection;
-  console.log("length", selectedNodes.length); // 0
+  // console.log("length", selectedNodes.length);
   // console.log(selectedNodes[0].type, selectedNodes[0].name);
 
   if (selectedNodes.length == 0) {

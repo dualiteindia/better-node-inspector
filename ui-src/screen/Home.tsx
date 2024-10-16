@@ -3,7 +3,6 @@ import Footer from "../Components/Footer";
 import Navbar from "../Components/Navbar";
 import ExpandableProperty from "../Components/ExpandableProperty";
 import EmptyNode from "../Components/EmptyNode";
-// import { plugin } from "../Utils/plugin";
 
 const Home = () => {
   interface NodeData {
@@ -34,8 +33,6 @@ const Home = () => {
 
   async function getChildren() {
     parent.postMessage({ pluginMessage: { type: "get-children" } }, "*");
-    // const res = await plugin.get("get-children", "children");
-    // console.log("res", res);
   }
 
   useEffect(() => {

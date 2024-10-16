@@ -70,7 +70,6 @@ export interface ParentNodeInterface {
   reactions?: ReadonlyArray<Reaction>;
   stuckTo?: SceneNode | null;
 
-  // interface SectionNodeInterface extends ParentNodeInterface {
   sectionContentsHidden?: boolean;
   type?: string;
 
@@ -116,71 +115,24 @@ export interface ParentNodeInterface {
   [key: string]: any; // Index signature added
 }
 
-// frame node
+export interface CommonInterface {
+  [key: string]: ParentNodeInterface;
+}
 
-//   isAsset: node.isAsset;
-//   detachedInfo: node.detachedInfo;
-//   variableConsumptionMap: node.variableConsumptionMap;
-//   paddingLeft: node.paddingLeft;
-//   paddingRight: node.paddingRight;
-//   paddingTop: node.paddingTop;
-//   paddingBottom: node.paddingBottom;
-//   primaryAxisAlignItems: node.primaryAxisAlignItems;
-//   counterAxisAlignItems: node.counterAxisAlignItems;
-//   primaryAxisSizingMode: node.primaryAxisSizingMode;
-//   layoutWrap: node.layoutWrap;
-//   counterAxisSpacing: node.counterAxisSpacing;
-//   counterAxisAlignContent: node.counterAxisAlignContent;
-//   layoutGrids: node.layoutGrids;
-//   gridStyleId: node.gridStyleId;
-//   backgrounds: node.backgrounds;
-//   backgroundStyleId: node.backgroundStyleId;
-//   guides: node.guides;
-//   expanded: node.expanded;
-//   constraints: node.constraints;
-//   layoutMode: node.layoutMode;
-//   counterAxisSizingMode: node.counterAxisSizingMode;
-//   verticalPadding: node.verticalPadding;
-//   itemSpacing: node.itemSpacing;
-//   overflowDirection: node.overflowDirection;
-//   numberOfFixedChildren: node.numberOfFixedChildren;
-//   overlayPositionType: node.overlayPositionType;
-//   overlayBackground: node.overlayBackground;
-//   overlayBackgroundInteraction: node.overlayBackgroundInteraction;
-//   itemReverseZIndex: node.itemReverseZIndex;
-//   strokesIncludedInLayout: node.strokesIncludedInLayout;
-//   cornerSmoothing: node.cornerSmoothing;
-//   topLeftRadius: node.topLeftRadius;
-//   topRightRadius: node.topRightRadius;
-//   bottomLeftRadius: node.bottomLeftRadius;
-//   bottomRightRadius: node.bottomRightRadius;
-//   clipsContent: node.clipsContent;
-//   devStatus: node.devStatus;
-//   playbackSettings: node.playbackSettings;
-// }
+export interface GetDataReturnInternface {
+  fillProperties: CommonInterface[];
+  commonProperties: CommonInterface[];
+  layoutProperties: CommonInterface[];
+  postionalProperties: CommonInterface[];
+  remaining: CommonInterface[];
+}
 
-// export type ParentNodes =
-//   | FrameNode
-//   | GroupNode
-//   | InstanceNode
-//   | ComponentNode
-//   | SectionNode
-//   | PageNode
-//   | BooleanOperationNode;
-
-// type ChildNodes =
-//   | RectangleNode
-//   | EllipseNode
-//   | PolygonNode
-//   | StarNode
-//   | LineNode
-//   | VectorNode
-//   | TextNode
-//   | SliceNode
-//   | BooleanOperationNode
-//   | FrameNode
-//   | InstanceNode
-//   | ComponentNode
-//   | SectionNode;
-
-// type ParentNode = ParentNodeInterface;
+export const common: string[] = ["id", "type", "name"];
+export const layout: string[] = ["layout", "Axis", "layout", "padding"];
+export const postion: string[] = [
+  "width",
+  "height",
+  "Radius",
+  "constraints",
+  "Transform",
+];
