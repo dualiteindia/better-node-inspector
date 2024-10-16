@@ -2,7 +2,6 @@ import "./App.css";
 import { RouterProvider, createMemoryRouter } from "react-router-dom";
 import Home from "./screen/Home";
 import Splash from "./screen/Splash";
-import StoreProvider from "./StoreProvider";
 
 const routes = [
   // {
@@ -21,11 +20,7 @@ const router = createMemoryRouter(routes, {
 });
 
 function App() {
-  return (
-    <StoreProvider>
-      <RouterProvider router={router} />
-    </StoreProvider>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

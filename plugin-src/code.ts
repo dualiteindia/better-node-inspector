@@ -52,6 +52,8 @@ function getData(node: ParentNodeInterface) {
     const postionalProperties: CommonInterface[] = [];
     const remaining: CommonInterface[] = [];
     for (const key in node) {
+      // skip children
+      if (key === "children") continue;
       // figma.mixed check
       if (typeof key === "symbol") {
         node[key] = "MIXED";

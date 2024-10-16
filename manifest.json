@@ -2,17 +2,12 @@
   "name": "Node Inspector - By Dualite",
   "id": "better-node-inspector",
   "api": "1.0.0",
-  "editorType": [
-    "figma",
-    "figjam"
-  ],
+  "editorType": ["figma", "figjam"],
   "permissions": [],
-  "main": "dist/code.js",
-  "ui": "dist/index.html",
+  "main": "dist/plugin/code.js",
+  "ui": "dist/ui/index.html",
   "networkAccess": {
-    "allowedDomains": [
-      "none"
-    ]
+    "allowedDomains": ["none"]
   },
   "documentAccess": "dynamic-page"
 }
