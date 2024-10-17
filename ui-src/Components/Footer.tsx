@@ -8,13 +8,13 @@ export default function Footer() {
       <hr className="border-strokeBlue border-1 shadow-md" />
       <div className="flex justify-around py-2 items-center">
         <div className="text-[0.65rem] font-semibold">
-          Convert your designs to code with Dualite
+          Convert your designs to code
         </div>
         <Button
-          onClick={() => window.open("https://dualite.dev")}
+          onClick={() => window.open("https://bit.ly/3TU6hiy")}
           icon={shineIcon}
         >
-          Visit
+          Try Dualite Now
         </Button>
       </div>
     </div>
