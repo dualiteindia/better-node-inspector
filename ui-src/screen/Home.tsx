@@ -31,13 +31,14 @@ const Home = () => {
   const [nodeName, setNodeName] = useState("");
   const [message, setMesssage] = useState("no-selection");
 
-  async function getChildren() {
+  function getChildren() {
     parent.postMessage({ pluginMessage: { type: "get-children" } }, "*");
   }
 
   useEffect(() => {
     window.onmessage = (event) => {
       const { type, value, children } = event.data.pluginMessage;
+
       if (value === undefined) {
         if (type === "no-selection") {
           setMesssage(type);
