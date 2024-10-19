@@ -20,13 +20,7 @@ const Home = () => {
     postionalProperties: [],
     remaining: [],
   });
-  // const [children, setChildren] = useState<NodeData[]>([
-  //   {
-  //     fillProperties: [],
-  //     commonProperties: [],
-  //     remaining: [],
-  //   },
-  // ]);
+
   const [children, setChildren] = useState<string>("");
   const [nodeName, setNodeName] = useState("");
   const [message, setMesssage] = useState("no-selection");
