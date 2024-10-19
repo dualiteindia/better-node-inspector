@@ -6,9 +6,13 @@ Better Node Inspector is a powerful plugin designed to help developers inspect a
 
 ## Features
 
-Better Node Inspector offers a range of capabilities for examining node properties. Users can access general properties, positional attributes, manage flex and auto-layout settings, control fill properties, view child elements, and explore additional properties not covered in the main categories. This all-in-one interface streamlines the process of inspecting and node characteristics.
+Better Node Inspector offers a range of capabilities for examining node properties.The interface streamlines the process of inspecting node characteristics.
 
-![selectedNode](image-2.png)
+- Users can access general properties, positional attributes, flex and auto-layout settings, fill properties, view child elements, and explore additional properties not covered in the main categories
+- The plugin utilizes the async Figma API
+- Node child elements are only loaded when the user clicks on the children dropdown, significantly enhancing plugin performance and making it super fast.
+
+### ![selectedNode](image-2.png)
 
 ## Usage
 
